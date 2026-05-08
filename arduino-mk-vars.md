@@ -13,6 +13,7 @@ The following are the different variables that can be overwritten in the user ma
 *	[ChipKIT variables](#chipkit-variables)
 *	[ARM variables](#arm-variables)
 *	[Ctags variables](#ctags-variables)
+*	[ATtiny variables](#attiny-variables)
 
 ## Global variables
 
@@ -2013,6 +2014,84 @@ Path to the `ctags` binary. Defaults to user path.
 
 ```Makefile
 CTAGS_EXEC = /usr/local/bin/ctags
+```
+
+**Requirement:** *Optional*
+
+----
+
+## ATtiny variables
+
+### MICRONUCLEUS
+
+**Description:**
+
+Path to the `micronucleus` binary. Usually can be auto-detected from `which micronucleus`, `$(HOME)/.arduino*/packages/$(ALTERNATE_CORE)/tools/micronucleus/*/micronucleus` (Linux) or `$(HOME)/Library/Arduino*/packages/$(ALTERNATE_CORE)/tools/micronucleus/*/micronucleus` (OSX).
+
+**Example:**
+
+```Makefile
+MICRONUCLEUS = /usr/local/bin/micronucleus
+```
+
+**Requirement:** *Optional*
+
+----
+
+### MICRONUCLEUS_OPTS
+
+**Description:**
+
+Flags to pass to `micronucleus` command.
+
+Defaults to `--no-ansi --run --timeout 60`
+
+**Requirement:** *Optional*
+
+----
+
+### TIMER_CLOCK_SOURCE
+
+**Description:**
+
+Timer 1 clock frequency. Defaults to CPU frequency.
+
+**Example:**
+
+```Makefile
+TIMER_CLOCK_SOURCE = pll
+```
+
+**Requirement:** *Optional*
+
+----
+
+### CLOCK_SOURCE
+
+**Description:**
+
+Clock source identifier that passes to a compile option as -DCLOCK_SOURCE=$(CLOCK_SOURCE). Normally parsed from boards.txt.
+
+**Example:**
+
+```Makefile
+CLOCK_SOURCE = 0
+```
+
+**Requirement:** *Optional*
+
+----
+
+### PLL_SETTINGS
+
+**Description:**
+
+Compiler flags for Timer 1 clock frequency. Normally parsed from boards.txt.
+
+**Example:**
+
+```Makefile
+PLL_SETTINGS = -DPLLTIMER1
 ```
 
 **Requirement:** *Optional*

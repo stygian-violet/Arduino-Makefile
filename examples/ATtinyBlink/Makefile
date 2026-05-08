@@ -3,24 +3,16 @@
 # Set this if the IDE is not in your $PATH or you want to use a specific version:
 ARDUINO_DIR = $(HOME)/arduino-1.8.5
 
-# Programmer type:
-ISP_PROG = usbasp
-
 # Examples - obviously pick only one and comment/delete the rest:
 
 # ------------------------------------------------------------------ #
 
 # https://github.com/SpenceKonde/ATTinyCore (1.5+)
-ALTERNATE_CORE = ATTinyCore
-BOARD_TAG = attinyx4
-BOARD_SUB = 84
-VARIANT = tinyX4
-F_CPU = 8000000L
-#BOARD_TAG = attinyx313
-#BOARD_SUB = 4313
-#BOARD_TAG = attinyx61
-#BOARD_SUB = 861
-#F_CPU = 8000000L
+BOARD_TAG = attinyx5micr
+BOARD_SUB =
+VARIANT = tinyX5
+BOARD_CLOCK = 16pll
+TIMER_CLOCK_SOURCE = pll
 
 # ------------------------------------------------------------------ #
 
@@ -54,6 +46,7 @@ BOARD_TAG = attiny85
 # ------------------------------------------------------------------ #
 
 # Path to the Arduino Makefile
-include $(ARDMK_DIR)/Arduino.mk
+include $(ARDMK_DIR)/ATTiny.mk
 
-# !!! Important. You have to use 'make ispload' when using an ISP.
+# !!! Important. You have to use 'make ispload' when using an ISP
+# !!! and 'make microload' when using Micronucleus.
