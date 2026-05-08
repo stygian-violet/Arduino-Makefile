@@ -5,6 +5,12 @@ COMMON_INCLUDED = TRUE
 # (directory and optional filename) exists
 dir_if_exists = $(if $(wildcard $(1)$(2)),$(1))
 
+# recursive wildcard function, call with params:
+#  - start directory (finished with /) or empty string for current dir
+#  - glob pattern
+# (taken from http://blog.jgc.org/2011/07/gnu-make-recursive-wildcard-function.html)
+rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
+
 # result = $(call READ_BOARD_TXT, 'boardname', 'parameter')
 PARSE_BOARD = $(shell if [ -f $(BOARDS_TXT) ]; \
 then \

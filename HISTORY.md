@@ -23,6 +23,7 @@ I tried to give credit whenever possible. If I have missed anyone, kindly add it
 - Tweak: Update how avr-size is called on Sam, also moved to gnu11 std (issue #602) (https://github.com/tuna-f1sh)
 - Tweak: Detect most recent toolchain if multiple found, add `*_VER` variable to override (issue #611) (https://github.com/tuna-f1sh)
 - Tweak: Replace `egrep` with `grep -E`. (https://github.com/stygian-violet)
+- Tweak: Search for source files recursively. (https://github.com/stygian-violet)
 - New: Added -fdiagnostics-color to \*STD flags (https://github.com/sej7278)
 - New: Made -fdiagnostics-color take a variiable DIAGNOSTICS_COLOR_WHEN: never, always, auto. (https://github.com/wingunder)
 - New: Add generation of tags file using ctags, which automatically includes project libs and Arduino core. (https://github.com/tuna-f1sh)
