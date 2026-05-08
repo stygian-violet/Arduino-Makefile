@@ -40,6 +40,7 @@ I tried to give credit whenever possible. If I have missed anyone, kindly add it
 - New: Support for Python 3 and multi-os Python installation using new PYTHON_CMD variable.
 - New: Add "ARDUINO_{build.board}" to be able to detect board type.
 - New: Add `SRC_DIR` variable. (https://github.com/stygian-violet)
+- New: Rebuild on makefile changes. (https://github.com/stygian-violet)
 
 ### 1.6.0 (2017-07-11)
 - Fix: Allowed for SparkFun's weird usb pid/vid submenu shenanigans (issue #499). (https://github.com/sej7278)

@@ -1926,5 +1926,7 @@ help:
         clean depends size show_boards monitor disasm symbol_sizes generated_assembly \
         generate_assembly verify_size burn_bootloader help pre-build tags debug debug_init
 
+%: $(MAKEFILE_LIST)
+
 # added - in the beginning, so that we don't get an error if the file is not present
 -include $(DEPS)
