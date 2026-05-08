@@ -718,7 +718,7 @@ ifeq ($(strip $(NO_CORE)),)
 
     ifndef F_CPU
         ifdef BOARD_CLOCK
-            F_CPU := $(call PARSE_BOARD,$(BOARD_TAG),menu.(speed|clock).$(BOARD_CLOCK).build.f_cpu)
+            F_CPU := $(call PARSE_BOARD,$(BOARD_TAG),menu.(speed|clock|sketchclock).$(BOARD_CLOCK).build.f_cpu)
         endif
         ifndef F_CPU
             F_CPU := $(call PARSE_BOARD,$(BOARD_TAG),menu.(chip|cpu).$(BOARD_SUB).build.f_cpu)
@@ -784,7 +784,7 @@ ifeq ($(strip $(NO_CORE)),)
 
     ifndef ISP_HIGH_FUSE
         ifdef BOARD_CLOCK
-            ISP_HIGH_FUSE := $(call PARSE_BOARD,$(BOARD_TAG),menu.(speed|clock).$(BOARD_CLOCK).bootloader.high_fuses)
+            ISP_HIGH_FUSE := $(call PARSE_BOARD,$(BOARD_TAG),menu.(speed|clock|sketchclock).$(BOARD_CLOCK).bootloader.high_fuses)
         endif
         ifndef ISP_HIGH_FUSE
             ISP_HIGH_FUSE := $(call PARSE_BOARD,$(BOARD_TAG),menu.(chip|cpu).$(BOARD_SUB).bootloader.high_fuses)
@@ -796,7 +796,7 @@ ifeq ($(strip $(NO_CORE)),)
 
     ifndef ISP_LOW_FUSE
         ifdef BOARD_CLOCK
-            ISP_LOW_FUSE := $(call PARSE_BOARD,$(BOARD_TAG),menu.(speed|clock).$(BOARD_CLOCK).bootloader.low_fuses)
+            ISP_LOW_FUSE := $(call PARSE_BOARD,$(BOARD_TAG),menu.(speed|clock|sketchclock).$(BOARD_CLOCK).bootloader.low_fuses)
         endif
         ifndef ISP_LOW_FUSE
             ISP_LOW_FUSE := $(call PARSE_BOARD,$(BOARD_TAG),menu.(chip|cpu).$(BOARD_SUB).bootloader.low_fuses)
@@ -808,7 +808,7 @@ ifeq ($(strip $(NO_CORE)),)
 
     ifndef ISP_EXT_FUSE
         ifdef BOARD_CLOCK
-            ISP_EXT_FUSE := $(call PARSE_BOARD,$(BOARD_TAG),menu.(speed|clock).$(BOARD_CLOCK).bootloader.extended_fuses)
+            ISP_EXT_FUSE := $(call PARSE_BOARD,$(BOARD_TAG),menu.(speed|clock|sketchclock).$(BOARD_CLOCK).bootloader.extended_fuses)
         endif
         ifndef ISP_EXT_FUSE
             ISP_EXT_FUSE := $(call PARSE_BOARD,$(BOARD_TAG),menu.(chip|cpu).$(BOARD_SUB).bootloader.extended_fuses)

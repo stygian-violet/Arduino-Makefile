@@ -42,6 +42,7 @@ I tried to give credit whenever possible. If I have missed anyone, kindly add it
 - New: Add "ARDUINO_{build.board}" to be able to detect board type.
 - New: Add `SRC_DIR` variable. (https://github.com/stygian-violet)
 - New: Rebuild on makefile changes. (https://github.com/stygian-violet)
+- New: Add support for board.menu.sketchclock entries in boards.txt files. (https://github.com/stygian-violet)
 
 ### 1.6.0 (2017-07-11)
 - Fix: Allowed for SparkFun's weird usb pid/vid submenu shenanigans (issue #499). (https://github.com/sej7278)
