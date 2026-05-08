@@ -413,11 +413,6 @@ endif
 CFLAGS_STD += -std=gnu11
 CPPFLAGS += -DMD -D$(USB_TYPE) '-DUSB_PRODUCT=$(USB_PRODUCT)' '-DUSB_MANUFACTURER=$(USB_MANUFACTURER)'
 
-# Get extra define flags from boards.txt
-EXFLAGS := $(shell echo $(call PARSE_BOARD,$(BOARD_TAG),build.extra_flags) | $(GREP_CMD) -oE '(-D)\w+')
-
-# Strip only defines from extra flags as boards file appends user {build.usb}
-CPPFLAGS += $(EXFLAGS)
 CPPFLAGS += -DUSB_VID=$(USB_VID)
 CPPFLAGS += -DUSB_PID=$(USB_PID)
 # Cortex compiler flags

@@ -1182,8 +1182,12 @@ else
     $(call show_config_variable,MCU_FLAG_NAME,[USER])
 endif
 
+# Get extra define flags from boards.txt
+# Strip only defines from extra flags as boards file appends user {build.usb}
+EXFLAGS := $(shell echo $(call PARSE_BOARD,$(BOARD_TAG),build.extra_flags) | $(GREP_CMD) -oE '(-D)\w+(=\w+)?')
+
 # Using += instead of =, so that CPPFLAGS can be set per sketch level
-CPPFLAGS      += -$(MCU_FLAG_NAME)=$(MCU) -DF_CPU=$(F_CPU) -DARDUINO=$(ARDUINO_VERSION) -DARDUINO_$(BOARD) $(ARDUINO_ARCH_FLAG) \
+CPPFLAGS      += $(EXFLAGS) -$(MCU_FLAG_NAME)=$(MCU) -DF_CPU=$(F_CPU) -DARDUINO=$(ARDUINO_VERSION) -DARDUINO_$(BOARD) $(ARDUINO_ARCH_FLAG) \
          "-DARDUINO_BOARD=\"$(BOARD)\"" "-DARDUINO_VARIANT=\"$(VARIANT)\"" \
         -I$(ARDUINO_CORE_PATH) -I$(ARDUINO_CORE_PATH)/api -I$(ARDUINO_VAR_PATH)/$(VARIANT) \
         $(SYS_INCLUDES) $(PLATFORM_INCLUDES) $(USER_INCLUDES) -Wall -ffunction-sections \
