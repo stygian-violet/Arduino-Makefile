@@ -111,7 +111,7 @@ else
 endif
 
 ifeq ($(CURRENT_OS),WINDOWS)
-		ifneq ($(shell echo $(ARDUINO_DIR) | egrep '\\|[[:space:]]|cygdrive'),)
+		ifneq ($(shell echo $(ARDUINO_DIR) | grep -E '\\|[[:space:]]|cygdrive'),)
         echo $(error On Windows, ARDUINO_DIR and other defines must use forward slash and not contain spaces, special characters or be cygdrive relative)
     endif
 endif
