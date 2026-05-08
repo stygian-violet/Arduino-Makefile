@@ -27,7 +27,7 @@
 #
 # PATHS YOU NEED TO SET UP
 #
-# We need to worry about three different sorts of files:
+# We need to worry about four different sorts of files:
 #
 # 1. The directory where the *.mk files are stored
 #    => ARDMK_DIR
@@ -40,6 +40,9 @@
 #    might come from the system. Most of the toolchain is like this:
 #    on Linux it is supplied by the system.
 #    => AVR_TOOLS_DIR
+#
+# 4. The directory where the sketch source code is stored
+#    => SRC_DIR
 #
 # Having set these three variables, we can work out the rest assuming
 # that things are canonically arranged beneath the directories defined
@@ -63,7 +66,7 @@
 #
 # On Windows declare this environmental variables using the windows
 # configuration options or Cygwin .bashrc. Control Panel > System > Advanced system settings
-# The paths must use Unix style forward slash and not have any spaces 
+# The paths must use Unix style forward slash and not have any spaces
 # or escape charactors. One must use a symbolic link if the path does
 # contain spaces.
 #
@@ -273,6 +276,16 @@ ifndef ARDMK_DIR_MSG
     $(call show_config_variable,ARDMK_DIR,[COMPUTED],(relative to $(notdir $(lastword $(MAKEFILE_LIST)))))
 else
     $(call show_config_variable,ARDMK_DIR,[USER])
+endif
+
+########################################################################
+# Source code path
+
+ifndef SRC_DIR
+    SRC_DIR := $(realpath .)
+    $(call show_config_variable,SRC_DIR,[COMPUTED],(current directory))
+else
+    $(call show_config_variable,SRC_DIR,[USER])
 endif
 
 ########################################################################
@@ -894,19 +907,19 @@ endif
 ########################################################################
 # Local sources
 
-LOCAL_C_SRCS    ?= $(wildcard *.c)
-LOCAL_CPP_SRCS  ?= $(wildcard *.cpp)
-LOCAL_CC_SRCS   ?= $(wildcard *.cc)
-LOCAL_PDE_SRCS  ?= $(wildcard *.pde)
-LOCAL_INO_SRCS  ?= $(wildcard *.ino)
-LOCAL_AS_SRCS   ?= $(wildcard *.S)
+LOCAL_C_SRCS    ?= $(wildcard $(SRC_DIR)/*.c)
+LOCAL_CPP_SRCS  ?= $(wildcard $(SRC_DIR)/*.cpp)
+LOCAL_CC_SRCS   ?= $(wildcard $(SRC_DIR)/*.cc)
+LOCAL_PDE_SRCS  ?= $(wildcard $(SRC_DIR)/*.pde)
+LOCAL_INO_SRCS  ?= $(wildcard $(SRC_DIR)/*.ino)
+LOCAL_AS_SRCS   ?= $(wildcard $(SRC_DIR)/*.S)
 LOCAL_SRCS      = $(LOCAL_C_SRCS)   $(LOCAL_CPP_SRCS) \
 		$(LOCAL_CC_SRCS)   $(LOCAL_PDE_SRCS) \
 		$(LOCAL_INO_SRCS) $(LOCAL_AS_SRCS)
 LOCAL_OBJ_FILES = $(LOCAL_C_SRCS:.c=.c.o)   $(LOCAL_CPP_SRCS:.cpp=.cpp.o) \
 		$(LOCAL_CC_SRCS:.cc=.cc.o)   $(LOCAL_PDE_SRCS:.pde=.pde.o) \
 		$(LOCAL_INO_SRCS:.ino=.ino.o) $(LOCAL_AS_SRCS:.S=.S.o)
-LOCAL_OBJS      = $(patsubst %,$(OBJDIR)/%,$(LOCAL_OBJ_FILES))
+LOCAL_OBJS      = $(patsubst $(SRC_DIR)/%,$(OBJDIR)/%,$(LOCAL_OBJ_FILES))
 
 ifeq ($(words $(LOCAL_SRCS)), 0)
     $(error At least one source file (*.ino, *.pde, *.cpp, *c, *cc, *.S) is needed)
@@ -1415,46 +1428,46 @@ else
 endif
 
 # normal local sources
-$(OBJDIR)/%.c.o: %.c $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.c.o: $(SRC_DIR)/%.c $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CC) -MMD -c $(CPPFLAGS) $(CFLAGS) $< -o $@
 
-$(OBJDIR)/%.cc.o: %.cc $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.cc.o: $(SRC_DIR)/%.cc $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CXX) -MMD -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
-$(OBJDIR)/%.cpp.o: %.cpp $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.cpp.o: $(SRC_DIR)/%.cpp $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CXX) -MMD -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
-$(OBJDIR)/%.S.o: %.S $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.S.o: $(SRC_DIR)/%.S $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CC) -MMD -c $(CPPFLAGS) $(ASFLAGS) $< -o $@
 
-$(OBJDIR)/%.s.o: %.s $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.s.o: $(SRC_DIR)/%.s $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CC) -c $(CPPFLAGS) $(ASFLAGS) $< -o $@
 
 # the pde -> o file
-$(OBJDIR)/%.pde.o: %.pde $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.pde.o: $(SRC_DIR)/%.pde $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CXX) -x c++ -include $(ARDUINO_HEADER) -MMD -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
 # the ino -> o file
-$(OBJDIR)/%.ino.o: %.ino $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.ino.o: $(SRC_DIR)/%.ino $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CXX) -x c++ -include $(ARDUINO_HEADER) -MMD -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
 # generated assembly
-$(OBJDIR)/%.s: %.pde $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.s: $(SRC_DIR)/%.pde $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CXX) -x c++ -include $(ARDUINO_HEADER) -MMD -S -fverbose-asm $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
-$(OBJDIR)/%.s: %.ino $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.s: $(SRC_DIR)/%.ino $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CXX) -x c++ -include $(ARDUINO_HEADER) -MMD -S -fverbose-asm $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
-$(OBJDIR)/%.s: %.cpp $(COMMON_DEPS) | $(OBJDIR)
+$(OBJDIR)/%.s: $(SRC_DIR)/%.cpp $(COMMON_DEPS) | $(OBJDIR)
 	@$(MKDIR) $(dir $@)
 	$(CXX) -x c++ -MMD -S -fverbose-asm $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 

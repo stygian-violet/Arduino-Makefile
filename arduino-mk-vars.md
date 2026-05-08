@@ -36,6 +36,22 @@ ARDUINO_QUIET = 1
 
 ## Installation/Directory variables
 
+### SRC_DIR
+
+**Description:**
+
+Directory where the sketch source code is stored.
+
+Defaults to the current working directory.
+
+**Example:**
+
+```Makefile
+SRC_DIR := $(realpath ./src)
+```
+
+**Requirement:** *Optional*
+
 ### ARDMK_DIR
 
 **Description:**
